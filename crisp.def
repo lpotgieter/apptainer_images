@@ -1,0 +1,32 @@
+Bootstrap: docker
+From: ubuntu:20.04
+
+%labels
+    Author LizelPotgieter
+    Version v1.0
+
+%post
+    apt-get -y update
+    apt-get -y install libncurses-dev \
+        git \
+        build-essential \
+        autoconf \
+        libtool \
+        wget \
+        make \
+        zlib1g-dev \
+        curl
+
+    cd /opt
+
+    git clone https://github.com/vibansal/crisp
+
+    cd crisp
+
+    make all
+
+%environment   
+    export PATH=/opt/crisp/bin:$PATH
+
+%runscript
+    exec CRISP.binary "$@"
